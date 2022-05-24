@@ -25,6 +25,9 @@ export default hopeTheme({
   // sidebar
   sidebar: sidebar,
 
+  // sidebar嵌套的标题深度
+  headerDepth: 4,
+
   footer: "吴某人日寄",
 
   displayFooter: true,

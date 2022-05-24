@@ -2,6 +2,7 @@
 category:
   - Database
 index : 2
+title: 第二章：SQL语法
 ---
 
 # SQL
