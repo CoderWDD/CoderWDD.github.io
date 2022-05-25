@@ -45,6 +45,17 @@ export default navbar([
       }
     ]
   },
+  // C++ 选项
+  {
+    text: "C++",
+    prefix: "/C++/",
+    children:[
+      {
+        text: "C++基础入门",
+        link: "C++基础入门/"
+      }
+    ]
+  },
   // Fontend 选项
   {
     text:"Fontend",
@@ -71,7 +82,13 @@ export default navbar([
   // Algorithm 选项
   {
     text:"Algorithm",
-    link:"/Algorithm/"
+    prefix:"/Algorithm/",
+    children:[
+      {
+        text:"课程笔记",
+        link:"ACM笔记/"
+      },
+    ]
   },
   // Linux 选项
   {
