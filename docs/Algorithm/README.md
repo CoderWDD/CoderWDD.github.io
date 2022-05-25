@@ -3,7 +3,6 @@ index: 1
 icon: creative
 category: 
     - Algorithm
-    - Graph
 ---
 
 # 算法
