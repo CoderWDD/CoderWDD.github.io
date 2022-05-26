@@ -2,6 +2,7 @@
 category: 
   - kotlin
 index : 3
+title : Kotlin空安全
 ---
 
 # Null Safety

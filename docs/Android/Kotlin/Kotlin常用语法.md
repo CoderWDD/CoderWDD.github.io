@@ -2,6 +2,7 @@
 category: 
   - kotlin
 index : 4
+title : Kotlin常用语法
 ---
 
 # Kotlin常用语法
