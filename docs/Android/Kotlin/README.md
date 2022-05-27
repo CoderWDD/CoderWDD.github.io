@@ -1,6 +1,6 @@
 ---
 
-index: false
+index: true
 icon: creative
 
 category: 
