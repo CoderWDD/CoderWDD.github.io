@@ -2,7 +2,7 @@
 category:
   - Fontend
 index : 1
-title :  Vue基础
+title : Vue基础
 author : 吴某人的宝贝
 ---
 
