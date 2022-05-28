@@ -2,7 +2,7 @@
 category:
   - kotlin
 index : 9
-title : Kotlin中的并发
+title : Kotlin协程
 ---
 
 ## 相关术语
@@ -37,7 +37,7 @@ title : Kotlin中的并发
   - 普通函数的调用过程：
     - 稍微了解过汇编中的函数调用的过程的应该都知道，在调用一个函数之前，需要先将当前的状态保存，在汇编中表现为将`eax`、`esp`等寄存器的值入栈保存，即`保存现场/保存上下文`然后才将程序的执行掌控权交给要调用的子函数，当其执行完后，就会将之前保存进栈的内容弹出，即`还原现场`，此时就可以重新回到原函数进行执行下面的代码而不出错了
   - 协程中挂起函数的调用：
-    - 与上面的普通函数的调用过程相似，挂起函数在执行的时候，也**要先保存当前的上下文**，然后再将程序执行的掌控权给到挂起函数中进行执行，待到挂起函数执行完了，就会还原上下文，同时接着往下执行。只是与普通函数的调用略有不同的是，在切换到挂起函数的时候，需要将对应的上下文传入（这一点又Kotlin自己完成），也正是因为挂起函数的调用过程与普通函数的调用过程类似的特性，所以挂起函数也能拥有类似普通函数的性质，比如，普通函数并不依赖其他函数存在，普通函数可以在任何其他函数中被调用，类比到**协程中的挂起函数，就表现为，挂起函数并不会绑定到线程中，且可以在任何线程中调用，同样的，在一个线程中开启、暂停，到另一个线程中恢复的操作也是允许的**。因为Kotlin会自动帮你传递需要的上下文。
+    - 与上面的普通函数的调用过程相似，挂起函数在执行的时候，也**要先保存当前的上下文**，然后再将程序执行的掌控权给到挂起函数中进行执行，待到挂起函数执行完了，就会还原上下文，同时接着往下执行。只是与普通函数的调用略有不同的是，在切换到挂起函数的时候，需要将对应的上下文（准确点说，应该是挂起函数之后的操作`Continuation`）传入（这一点由Kotlin自己完成），也正是因为挂起函数的调用过程与普通函数的调用过程类似的特性，所以挂起函数也能拥有类似普通函数的性质，比如，普通函数并不依赖其他函数存在，普通函数可以在任何其他函数中被调用，类比到**协程中的挂起函数，就表现为，挂起函数并不会绑定到线程中，且可以在任何线程中调用，同样的，在一个线程中开启、暂停，到另一个线程中恢复的操作也是允许的**。因为Kotlin会自动帮你传递需要的上下文。
 
 - 需要注意的是，挂起函数不能是入口函数，这一点也好理解，就像我们自定义的函数，一定要通过其他函数来调用一样，**挂起函数本身不能成为入口，所以挂起函数只能从另一个挂起点（挂起函数、可挂起Lambda表达式、协程或者内联到协程的Lambda表达式）中调用，而所有的挂起点的最终启动就是`协程构建器`**
 
@@ -475,16 +475,22 @@ title : Kotlin中的并发
 #### actors
 
 - 定义：一个`actor`是由协程、被限制并封装到该协程中的状态以及一个与其他协程通信的**通道`channel`**组合而成的一个实体。简单点理解，`actor`就像是一个**收发器**，即可以接受其他收发器发送来的消息，也能向其他收发器发送消息，`channel`就是收发信息的**管道**，消息可以在上面进行传输
+
 - 注意：
   - `actor`不会直接共享可变状态，`actor`与`actor`之间，只能通过**传递消息**来实现通信，所以每个`actor`都会附加一个消息通道以便能够接收消息。而且`actor`能基于所接收到的消息来决定其接下来的行为，如生成更多的`actor`、发送消息、操纵其私有状态等。
   - `actor`之间**不会存在竞争条件**，所以在没有共享状态时，不需要使用锁机制
+
 - `actor`与`channel`的关系：
+
   - `actor`可以与`channel`建立**多对多**的关系，这么做的目的是，单个`actor`可以读取多个`channel`中的信息，同样的，多个`actor`也可以从同一个`channel`中读取消息，值得注意的是，虽然这是一个并大模型，但`actor`自身是按照顺序来工作的，即如果接收到多条信息，则会按照顺序对接收到的信息进行处理
+
 - 创建使用`actor`：
   - 创建：使用kotlin的`actor`函数即可创建一个`actor`实例，并将其用来通信
     - 本质上，该函数是另一种**协程构建器**，因为在kotlin中，`actor`被认为是协程
 
 - 示例：
+
+  简单引入：
 
   ```kotlin
   import kotlinx.coroutines.GlobalScope
@@ -507,4 +513,84 @@ title : Kotlin中的并发
   Hello,I am an actor!
   ```
 
+  注意：
+
+  - `send`和`receive`都是挂起函数，当`channel`已满时，`send`会暂停执行，而当`channel`为空时，`receive`会暂停执行
+  - 所以，main函数必须使用`runBlocking`来进行包装以便能够调用挂起的`send`
+  - 调用`close`并不会立即停止`actor`协程，相反，`close`会发送特殊的消息`close token`到`channel`中，`channel`仍然会按照**先进先出**的方式读取消息队列，所以该特殊消息之前的所有消息都会在实际停止之前处理，即`close`也是一个消息，只有其前面的消息执行完了，才会执行该`close` 消息
+
+  多`channel`的`actor`：
+
+  ```kotlin
+  fun main() {
   
+      runBlocking {
+          val channel1 = Channel<Int>()
+          val channel2 = Channel<Int>()
+  
+          GlobalScope.launch {
+              while (true){
+                  select<Unit> {
+                      channel1.onReceive{ println("channel 1 $it") }
+                      channel2.onReceive{ println("channel 2 $it") }
+                  }
+              }
+          }
+  
+          channel1.send(17)
+          channel1.send(42)
+          channel1.close()
+          channel2.close()
+      }
+  }
+  // 运行结果：
+  channel 1 17
+  channel 1 42
+  ```
+
+  - `select`更倾向于执行第一条子句，也就是说，如果同时有多条子句可供选择的话，**就会选择第一条子句**
+
+  同一个`channel`上的多个`actor`：
+
+  ```kotlin
+  import kotlinx.coroutines.channels.Channel
+  import kotlinx.coroutines.channels.consumeEach
+  import kotlinx.coroutines.channels.take
+  import kotlinx.coroutines.launch
+  import kotlinx.coroutines.runBlocking
+  
+  fun main() {
+  
+      runBlocking {
+          val channel = Channel<String>()
+  
+          repeat(3){n ->
+              launch {
+                  while (true){
+                      channel.send("Message from actor $n")
+                  }
+              }
+          }
+  
+          channel.take(10).consumeEach { println(it) }
+          channel.close()
+      }
+  }
+  // 运行结果：
+  Message from actor 0
+  Message from actor 0
+  Message from actor 0
+  Message from actor 1
+  Message from actor 2
+  Message from actor 0
+  Message from actor 0
+  Message from actor 0
+  Message from actor 1
+  Message from actor 2
+  ```
+
+  
+
+  
+
+  ​	
