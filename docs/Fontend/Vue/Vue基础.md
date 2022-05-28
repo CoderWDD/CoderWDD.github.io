@@ -1,5 +1,5 @@
 ---
-category:
+category :
   - Fontend
 index : 1
 title : Vue基础
