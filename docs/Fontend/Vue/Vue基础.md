@@ -2,7 +2,7 @@
 category:
   - Fontend
 index : 1
-title :  Vue基础
+title : Vue基础
 author : 吴某人的宝贝
 ---
 
@@ -54,11 +54,11 @@ author : 吴某人的宝贝
   array.reverse()：反转数组
   ```
 
-- 2、使用Vue.set() 或者 vm.$set()
+- 2、使用`Vue.set()`或者`vm.$set()`
 
 - 特别注意：
 
-  - array.splice()的用法
+  - `array.splice()`的用法
 
     ```vue
     array.splice(a,b,c):从第a个元素开始，删除b个元素，并在原来的位置插入c元素，c元素可以为多个,返回值为删除元素的数组。
@@ -80,7 +80,7 @@ author : 吴某人的宝贝
     		fruits.splice()的返回值为：["Apple","Mango"]
     ```
 
-  - array.sort(a,b)
+  - `array.sort`(a,b)
 
     ```vue
     sort(a,b)方法用于对数组的元素进行排序。排序顺序可以是字母或数字，并按升序或降序。
@@ -89,7 +89,7 @@ author : 吴某人的宝贝
     - return b-a; 则为降序排列
     ```
 
-  - Vue.set() 和 vm.$set() 方法不能给vm或者vm的跟数据对象添加属性
+  - `Vue.set()` 和`vm.$set()`方法不能给vm或者vm的跟数据对象添加属性
 
 ## Vue收集表单数据(一般用ajax收集数据)
 
