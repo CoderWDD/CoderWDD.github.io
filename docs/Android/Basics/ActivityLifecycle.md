@@ -3,7 +3,7 @@ index: 1
 icon: markdown
 title: 四大组件之Activity
 category:
-  - Android Basics
+  - AndroidBasics
 tag:
   - Activity
   - 面试
