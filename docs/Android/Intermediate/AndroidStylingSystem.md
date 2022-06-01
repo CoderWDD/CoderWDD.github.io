@@ -3,7 +3,7 @@ category:
   - Android
   - View
 index : true
-title : Android's styling system
+title : Android styling system
 ---
 
 ## 优先级
