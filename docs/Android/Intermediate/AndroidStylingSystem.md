@@ -2,7 +2,7 @@
 category:
   - Android
   - View
-index : true
+index : 1
 title : Android styling system
 ---
 
