@@ -45,9 +45,11 @@ author : 吴某人的宝贝
 - 销毁后自定义事件会失效，但是原生DOM事件依然有效
 - 一般不会在beforeDestroy操作数据，因为即使操作数据，也不会在触发更新流程（Vue的生命周期是逐步向下的）
 
-## Vue组件化编程
+## Vue非单文件组件
 
 组件是实现应用中局部功能代码和资源的集合
+
+---
 
 ### 模块
 
@@ -55,11 +57,15 @@ author : 吴某人的宝贝
 - 为什么要使用模块：js文件很多很复杂
 - 模块用于复用js，简化js的编写，提高js的运行效率
 
+---
+
 ### 组件
 
 - 组件是用来实现局部（特定）功能效果的代码集合（html/css/js/image……）
 - 为什么要使用组件：一个界面的功能非常复杂
 - 组件用于复用编简化项目编码，提高运行效率
+
+---
 
 ### Vue中使用组件的三大步骤
 
@@ -197,6 +203,8 @@ author : 吴某人的宝贝
   </div>
   ```
 
+---
+
 #### 几个注意点
 
 - 关于组件名
@@ -241,3 +249,309 @@ author : 吴某人的宝贝
       const school = options
   </script>
   ```
+
+---
+
+### 组件的嵌套
+
+```vue
+<!-- 准备好一个容器-->
+<div id="root">
+    
+</div>
+
+<script type="text/javascript">
+    Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+    //定义student组件
+    const student = Vue.extend({
+        name:'student',
+        template:`
+			<div>
+				<h2>学生姓名：{{name}}</h2>	
+				<h2>学生年龄：{{age}}</h2>	
+    		</div>
+		`,
+        data(){
+            return {
+                name:'尚硅谷',
+                age:18
+            }
+        }
+    })
+
+    //定义school组件
+    const school = Vue.extend({
+        name:'school',
+        template:`
+			<div>
+				<h2>学校名称：{{name}}</h2>	
+				<h2>学校地址：{{address}}</h2>	
+				<student></student>
+   	 		</div>
+		`,
+        data(){
+            return {
+                name:'尚硅谷',
+                address:'北京'
+            }
+        },
+        // 注册组件（局部）
+        components:{
+            student
+        }
+    })
+
+    //定义hello组件
+    const hello = Vue.extend({
+        template:`<h1>{{msg}}</h1>`,
+        data(){
+            return {
+                msg:'欢迎来到尚硅谷学习！'
+            }
+        }
+    })
+
+    //定义app组件
+    const app = Vue.extend({
+        template:`
+			<div>	
+				<hello></hello>
+				<school></school>
+    		</div>
+		`,
+        components:{
+            school,
+            hello
+        }
+    })
+
+    //创建vm
+    new Vue({
+        template:'<app></app>',
+        el:'#root',
+        //注册组件（局部）
+        components:{app}
+    })
+</script>
+```
+
+---
+
+### Vuecomponent
+
+- school组件本质是一个名为Vuecomponent的构造函数，而且不是程序员定义的，是Vue.extend生成的。
+- 我们只需要写`<schoo/>`或`<school></school>`，Vue解析时会帮我们创建school组件的实例对象，即Vue帮我们执行的：new VueComponent(options)。
+- 特别注意：每次调用Vue.extend，返回的都是一个全新的VueComponent！！！！(这个VueComponent可不是实例对象)
+- 关于this指向：
+  - 组件配置中：data函数、methods中的函数、watch中的函数、computed中的函数 它们的this均是【VueComponent实例对象】
+  - new Vue(options)配置中：data函数、methods中的函数、watch中的函数、computed中的函数 它们的this均是【Vue实例对象】。
+- VueComponent的实例对象，以后简称vc（也可称之为：组件实例对象）。Vue的实例对象，以后简称vm。
+
+---
+
+### 一个重要的内置关系
+
+- 一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
+
+- 为什么要有这个关系：让组件实例对象（vc）可以访问到 Vue原型上的属性、方法。
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/9f3398cb2cfb4b169951adb53236ad60.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5qC86Zu354uQ5oCd,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+## Vue单文件组件(案例要放到脚手架里面才能用)
+
+单文件组件就是将一个组件的代码写在 .vue 这种格式的文件中，webpack 会将 .vue 文件解析成 html,css,js这些形式。
+
+案例：School.vue
+
+```vue
+<template>
+	<div class="demo">
+		<h2>学校名称：{{name}}</h2>
+		<h2>学校地址：{{address}}</h2>
+		<button @click="showName">点我提示学校名</button>	
+	</div>
+</template>
+
+<script>
+	 export default {
+		name:'School',
+		data(){
+			return {
+				name:'尚硅谷',
+				address:'北京昌平'
+			}
+		},
+		methods: {
+			showName(){
+				alert(this.name)
+			}
+		},
+	}
+</script>
+
+<style>
+	.demo{
+		background-color: orange;
+	}
+</style>
+```
+
+案例：Student.vue
+
+```vue
+<template>
+	<div>
+		<h2>学生姓名：{{name}}</h2>
+		<h2>学生年龄：{{age}}</h2>
+	</div>
+</template>
+
+<script>
+	 export default {
+		name:'Student',
+		data(){
+			return {
+				name:'张三',
+				age:18
+			}
+		}
+	}
+</script>
+```
+
+---
+
+### 暴露的三种方式
+
+#### 分别暴露
+
+```vue
+<script>
+	export const school = Vue.extend({
+        data(){
+			return {
+				name:'尚硅谷',
+				address:'北京昌平'
+			}
+		},
+		methods: {
+			showName(){
+				alert(this.name)
+			}
+		},
+    })
+</script>
+```
+
+#### 统一暴露
+
+```vue
+<script>
+	const school = Vue.extend({
+        data(){
+			return {
+				name:'尚硅谷',
+				address:'北京昌平'
+			}
+		},
+		methods: {
+			showName(){
+				alert(this.name)
+			}
+		},
+    })
+    export {school}
+</script>
+```
+
+#### 默认暴露(一般用这个)
+
+```vue
+<script>
+	const school = Vue.extend({
+        data(){
+			return {
+				name:'尚硅谷',
+				address:'北京昌平'
+			}
+		},
+		methods: {
+			showName(){
+				alert(this.name)
+			}
+		},
+    })
+    export default school
+</script>
+```
+
+### App.vue
+
+用来汇总所有的组件(大总管)
+
+```vue
+<template>
+	<div>
+		<School></School>
+		<Student></Student>
+	</div>
+</template>
+
+<script>
+	//引入组件
+	import School from './School.vue'
+	import Student from './Student.vue'
+
+	export default {
+		name:'App',
+		components:{
+			School,
+			Student
+		}
+	}
+</script>
+```
+
+### main.js
+
+在这个文件里面创建 vue 实例
+
+```vue
+import App from './App.vue'
+
+new Vue({
+	el:'#root',
+	template:`<App></App>`,
+	components:{App},
+})
+```
+
+### index.html
+
+在这写 vue 要绑定的容器
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>练习一下单文件组件的语法</title>
+	</head>
+	<body>
+		<!-- 准备一个容器 -->
+		<div id="root"></div>
+        <script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="./main.js"></script>
+	</body>
+</html>
+```
+
+
+
+
+
+
+
+
+
