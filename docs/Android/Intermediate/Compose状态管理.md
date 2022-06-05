@@ -230,3 +230,229 @@ fun CityScreen() {
     }
 }
 ```
+
+##  在Compose中管理状态
+
+- 引入：上面已经提到了状态提升，意味着你可以将状态交给上级处理，可随着要管理跟踪的状态数量增加，或者需要在状态改变的同时还要进行逻辑处理时，状态提升就不是一个方便的好方法了。此时，我们应该将逻辑和状态事务都委派给其他类，也即**状态容器**（**状态容器**用于管理可组合项的逻辑和状态，又称**提升的状态对象**）。
+
+### 状态和逻辑类型
+
+- 不同类型的状态：
+  - **界面元素状态是界面元素的提升状态**。例如，[`ScaffoldState`](https://developer.android.com/reference/kotlin/androidx/compose/material/ScaffoldState) 用于处理 [`Scaffold`](https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#Scaffold(androidx.compose.ui.Modifier,androidx.compose.material.ScaffoldState,kotlin.Function0,kotlin.Function0,kotlin.Function1,kotlin.Function0,androidx.compose.material.FabPosition,kotlin.Boolean,kotlin.Function1,kotlin.Boolean,androidx.compose.ui.graphics.Shape,androidx.compose.ui.unit.Dp,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,kotlin.Function1)) 可组合项的状态。
+  - **屏幕或界面状态是屏幕上需要显示的内容**。例如，`CartUiState` 类可以包含购物车中的商品信息、向用户显示的消息或加载标记。该状态通常会与层次结构中的其他层相关联，原因是其包含应用数据。
+- 不同的逻辑类型：
+  - **界面行为逻辑或界面逻辑与如何在屏幕上显示状态变化相关**。例如，导航逻辑决定着接下来显示哪个屏幕，界面逻辑决定着如何在可能会使用信息提示控件或消息框的屏幕上显示用户消息。界面行为逻辑应始终位于组合中。
+  - **业务逻辑决定着如何处理状态变化**，例如如何付款或存储用户偏好设置。该逻辑通常位于业务层或数据层，但绝不会位于界面层。
+
+### Compose 管理状态的几种方式
+
+- **可组合项**：用于管理简单的界面元素状态
+- **状态容器**：用于管理复杂的界面元素状态，且可以拥有界面元素的状态和界面逻辑。**可以组合使用**，也就是说，可以将某个状态容器集成到其他状态容器中
+- **[架构组件 ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)**：一种特殊的状态容器类型，用于提供对业务逻辑以及屏幕或界面状态的访问权限。
+
+![state-dependencies](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/state-dependencies.svg)
+
+#### 将可组合项作为可信源：
+
+当状态比较简单时，可以直接在可组合项中使用界面逻辑和界面元素状态
+
+```kotlin
+@Composable
+fun MyApp() {
+    MyTheme {
+        val scaffoldState = rememberScaffoldState()
+        val coroutineScope = rememberCoroutineScope()
+
+        Scaffold(scaffoldState = scaffoldState) {
+            MyContent(
+                showSnackbar = { message ->
+                    coroutineScope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(message)
+                    }
+                }
+            )
+        }
+    }
+}
+```
+
+#### 将状态容器作为可信源：
+
+当状态涉及多个界面元素、复杂逻辑时，就应将相应的事务委派给状态容器
+
+- 注意：
+
+  - 该方法支持[分离关注点原则](https://en.wikipedia.org/wiki/Separation_of_concerns)：**可组合项负责发出界面元素，而状态容器包含界面逻辑和界面元素的状态**。
+  - 状态容器是可在组合中创建和保存的普通类。状态容器遵循[可组合项的生命周期](https://developer.android.com/jetpack/compose/lifecycle)，因此可以采用 Compose 依赖项。
+  - 如果状态容器包含要在重新创建 Activity 或进程后保留的状态，请使用 `rememberSaveable` 并为其创建自定义 `Saver`。
+
+- 示例：
+
+  ```kotlin
+  // Plain class that manages App's UI logic and UI elements' state
+  class MyAppState(
+      val scaffoldState: ScaffoldState,
+      val navController: NavHostController,
+      private val resources: Resources,
+      /* ... */
+  ) {
+      val bottomBarTabs = /* State */
+  
+      // Logic to decide when to show the bottom bar
+      val shouldShowBottomBar: Boolean
+          get() = /* ... */
+  
+      // Navigation logic, which is a type of UI logic
+      fun navigateToBottomBarRoute(route: String) { /* ... */ }
+  
+      // Show snackbar using Resources
+      fun showSnackbar(message: String) { /* ... */ }
+  }
+  
+  @Composable
+  fun rememberMyAppState(
+      scaffoldState: ScaffoldState = rememberScaffoldState(),
+      navController: NavHostController = rememberNavController(),
+      resources: Resources = LocalContext.current.resources,
+      /* ... */
+  ) = remember(scaffoldState, navController, resources, /* ... */) {
+      MyAppState(scaffoldState, navController, resources, /* ... */)
+  }
+  ```
+
+  `MyAppState` 采用的是依赖项，因此最好提供可记住组合中 `MyAppState` 实例的方法。在上面的示例中为 `rememberMyAppState` 函数。
+
+  现在，`MyApp` 侧重于发出界面元素，并将所有界面逻辑和界面元素的状态委派给 `MyAppState`：
+
+  ```kotlin
+  @Composable
+  fun MyApp() {
+      MyTheme {
+          val myAppState = rememberMyAppState()
+          Scaffold(
+              scaffoldState = myAppState.scaffoldState,
+              bottomBar = {
+                  if (myAppState.shouldShowBottomBar) {
+                      BottomBar(
+                          tabs = myAppState.bottomBarTabs,
+                          navigateToRoute = {
+                              myAppState.navigateToBottomBarRoute(it)
+                          }
+                      )
+                  }
+              }
+          ) {
+              NavHost(navController = myAppState.navController, "initial") { /* ... */ }
+          }
+      }
+  }
+  ```
+
+  从上面的代码中，可以知道，**增加可组合项的责任会增加对状态容器的需求**。这些责任可能存在于界面逻辑中，也可能仅与要跟踪的状态数相关。
+
+#### 将 ViewModel 作为可信源
+
+-  **ViewModel 是一种特殊的状态容器类型**，其负责：
+  - 提供对应用的业务逻辑的访问权限，该逻辑通常位于层次结构的其他层（例如业务层和数据层）中；
+  - 在特定屏幕上呈现的应用数据，这些数据会成为屏幕或界面状态。
+
+- 注意：
+  - **ViewModel 的生命周期比组合长**，原因是它们在配置发生变化后仍然有效。ViewModel 的生命周期较长，因此不应保留对绑定到组合生命周期的状态的长期引用。否则，可能会导致内存泄漏。
+  - 建议**屏幕级可组合项**使用 ViewModel 实例来提供对业务逻辑的访问权限并作为界面状态的可信来源。
+  - **不要**将 ViewModel 实例向下传递到其他可组合项。
+  - 如果 ViewModel 包含要在进程重新创建后保留的状态，请使用 [`SavedStateHandle`](https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate) 保留该状态。
+
+- 以下是在屏幕级可组合项中使用 ViewModel 的示例：
+
+  ```kotlin
+  data class ExampleUiState(
+      val dataToDisplayOnScreen: List<Example> = emptyList(),
+      val userMessages: List<Message> = emptyList(),
+      val loading: Boolean = false
+  )
+  
+  class ExampleViewModel(
+      private val repository: MyRepository,
+      private val savedState: SavedStateHandle
+  ) : ViewModel() {
+  
+      var uiState by mutableStateOf(ExampleUiState())
+          private set
+  
+      // Business logic
+      fun somethingRelatedToBusinessLogic() { /* ... */ }
+  }
+  
+  @Composable
+  fun ExampleScreen(viewModel: ExampleViewModel = viewModel()) {
+  
+      val uiState = viewModel.uiState
+      /* ... */
+  
+      ExampleReusableComponent(
+          someData = uiState.dataToDisplayOnScreen,
+          onDoSomething = { viewModel.somethingRelatedToBusinessLogic() }
+      )
+  }
+  
+  @Composable
+  fun ExampleReusableComponent(someData: Any, onDoSomething: () -> Unit) {
+      /* ... */
+      Button(onClick = onDoSomething) {
+          Text("Do something")
+      }
+  }
+  ```
+
+### ViewModel和状态容器
+
+- ViewModel 优势：
+  - 与 [Navigation](https://developer.android.com/jetpack/compose/navigation) 集成：
+    - 当屏幕位于返回堆栈中时，Navigation 会缓存 ViewModel。这对在返回目标位置时即时提供之前加载的数据非常重要。使用遵循可组合项屏幕的生命周期的状态容器时，这种情况会更难处理。
+    - 当目标位置从返回堆栈弹出后，ViewModel 也会被一并清除，以确保自动清理状态。这不同于监听可组合项的处理，监听的原因可能有多种，例如转到新屏幕、配置发生变化等。
+  - 与其他 Jetpack 库集成。
+
+- 重点：**ViewModel 只是状态容器的实现细节，它负有特定的责任。如果您想让项目模块脱离 Android 依赖项，可以依赖接口在不同环境中使实现可替换：在 Android 特有的模块中使用 ViewModel，而在其他模块中使用更简单的实现。**
+
+- 说明：由于状态容器可组合，且 ViewModel 与普通状态容器的责任不同，因此**屏幕级可组合项可以既有**一个 ViewModel 来提供对业务逻辑的访问权限，又有一个状态容器来管理其界面逻辑和界面元素状态。由于 ViewModel 的生命周期比状态容器长，因此状态容器可以根据需要将 ViewModel 视为依赖项。
+
+- 下面的代码展示了在 `ExampleScreen` 上协同工作的 ViewModel 和普通状态容器：
+
+  ```kotlin
+  class ExampleState(
+      val lazyListState: LazyListState,
+      private val resources: Resources,
+      private val expandedItems: List<Item> = emptyList()
+  ) {
+      fun isExpandedItem(item: Item): Boolean = TODO()
+      /* ... */
+  }
+  
+  @Composable
+  fun rememberExampleState(/* ... */): ExampleState { TODO() }
+  
+  @Composable
+  fun ExampleScreen(viewModel: ExampleViewModel = viewModel()) {
+  
+      val uiState = viewModel.uiState
+      val exampleState = rememberExampleState()
+  
+      LazyColumn(state = exampleState.lazyListState) {
+          items(uiState.dataToDisplayOnScreen) { item ->
+              if (exampleState.isExpandedItem(item)) {
+                  /* ... */
+              }
+              /* ... */
+          }
+      }
+  }
+  ```
+
+## 总结
+
+- Compose 中，如果某个可组合项有状态需要处理，则需要将其按照上面的划分进行管理，否则可能会导致其结果不可预期
+
+## 参考资料
+
+- [官方文档](https://developer.android.com/jetpack/compose/state#managing-state)
+- 《Jetpack Compose》---- 朱江
