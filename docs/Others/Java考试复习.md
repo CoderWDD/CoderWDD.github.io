@@ -47,7 +47,7 @@ author : 吴某人的宝贝
 - 在类的UML图中，使用一个长方形描述一个类，将长方形分成三部分
   - 第一层是名字层
     - 如果类的名字是常规字体，表示具体类
-    - <font color="red">如果类的名字是斜体，表示抽象类</font>
+    - 如果类的名字是斜体，表示抽象类
   - 第二层是变量层
     - 列出类的成员变量以及类型，格式为：`“变量名字：类型”`，根据需要列出最重要的成员变量即可
   - 第三层是方法层
@@ -76,7 +76,7 @@ author : 吴某人的宝贝
 
 ### UML继承关系
 
-- 如果一个类是另一个类的子类，就通过一个实线来表示两者的继承关系，从子类指向父类<font color="red">注意：终点的箭头是空心的</font>
+- 如果一个类是另一个类的子类，就通过一个实线来表示两者的继承关系，从子类指向父类注意：**终点的箭头是空心的**
 
 ![image-20220607181254038](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220607181254038.png)
 
@@ -120,7 +120,7 @@ author : 吴某人的宝贝
 
   
 
-## 第二章：<font color="red">类和对象</font>、面向对象程序设计概念、方法、访问控制、Static修饰符（默认你会）
+## 第二章：`类和对象`、面向对象程序设计概念、方法、访问控制、Static修饰符（默认你会）
 
 ### 面向对象程序设计
 
@@ -140,9 +140,9 @@ author : 吴某人的宝贝
 - 接口
 - 封装、透明
 - 抽象
-- <font color="red">继承</font>、扩展、覆盖
+- **继承**、扩展、覆盖
 - 组合
-- <font color="red">多态、动态绑定</font>
+- **多态、动态绑定**
 
 ### 方法（重点）
 
@@ -246,7 +246,7 @@ void speak(String s){
 
 ---
 
-## 第三章：<font color="red">继承与多态</font>、方法重写、<font color="red">动态绑定</font>（分析题｜调用方法）、<font color="red">抽象类</font>
+## 第三章：`继承与多态`、方法重写、`动态绑定`（分析题｜调用方法）、`抽象类`
 
 ### 继承 inheritance（会写）
 
@@ -352,7 +352,7 @@ public class Dog extends Animal{
 
   ![image-20220607204817576](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220607204817576.png)
 
-## 第四章：<font color="red">接口</font>、接口设计模式
+## 第四章：`接口`、接口设计模式
 
 ### 什么是接口
 
@@ -385,7 +385,7 @@ public class Dog extends Animal{
 
   ![image-20220607205343573](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220607205343573.png)
 
-## 第五章：内部类与<font color="red">异常处理</font>（好好了解）
+## 第五章：内部类与`异常处理`（好好了解）
 
 ### 异常处理机制
 
@@ -440,7 +440,7 @@ public class CarException extends Exception{
   }
   ```
 
-## 第六章：常用实用类、<font color="red">String类</font>（截取｜前后空格｜找一个字母）
+## 第六章：常用实用类、`String类`（截取｜前后空格｜找一个字母）
 
 - 重点是String类
 
@@ -505,7 +505,7 @@ int[] b = new int[]{5,4,3,2,1};
   //[1,2,3]
   ```
 
-## 第七章：<font color="red">Java GUI编程</font>（基本写法编程题必出）
+## 第七章：`Java GUI编程`（基本写法编程题必出）
 
 ### 创建GUI的基本步骤（重点）
 
@@ -537,7 +537,7 @@ int[] b = new int[]{5,4,3,2,1};
 
 ### 需掌握：实验三-简单计算程序和引入的包
 
-## 第八章：<font color="red">多线程</font>、<font color="red">输入输出流</font>（基本写法编程题必出）
+## 第八章：`多线程`、<font color="red">输入输出流</font>（基本写法编程题必出）
 
 ### 多线程（概念：了解）
 
