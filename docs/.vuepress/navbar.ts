@@ -71,13 +71,7 @@ export default navbar([
   // Algorithm 选项
   {
     text: "Algorithm",
-    prefix: "/Algorithm/",
-    children: [
-      {
-        text: "课程笔记",
-        link: "ACM笔记/"
-      },
-    ]
+    link: "/Algorithm/"
   },
   // Linux 选项
   {
@@ -104,6 +98,11 @@ export default navbar([
         {
           text: "Java",
           link: "Java/"
+        },
+        // ACM Algorithm 选项
+        {
+          text: "ACM Algorithm",
+          link: "ACM笔记/"
         },
       ]
   },

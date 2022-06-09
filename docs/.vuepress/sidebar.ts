@@ -13,11 +13,12 @@ export default sidebar(
     "/Fontend/HTML/":"structure",
     "/Fontend/JavaScript/":"structure",
     "/Fontend/Vue/":"structure",
-    "/Algorithm/ACM笔记/":"structure",
+    "/Algorithm/":"structure",
     "/Linux/":"structure",
     "/GUET/C++/":"structure",
     "/GUET/Java/":"structure",
     "/GUET/Database/":"structure",
+    "/GUET/ACM笔记/":"structure",
     "/Others/":"structure",
   }
 );
