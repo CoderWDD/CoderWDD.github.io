@@ -4,105 +4,112 @@ export default navbar([
   "/",
   // Android 选项
   {
-    text:"Android",
-    icon:"logo",
-    prefix:"/Android/",
-    children:[
+    text: "Android",
+    icon: "logo",
+    prefix: "/Android/",
+    children: [
       {
-        text:"Kotlin",
-        link:"Kotlin/"
+        text: "Kotlin",
+        link: "Kotlin/"
       },
       {
-        text:"Android Basics",
-        link:"Basics/"
+        text: "Android Basics",
+        link: "Basics/"
       },
       {
-        text:"Android Intermediate",
-        link:"Intermediate/"
+        text: "Android Intermediate",
+        link: "Intermediate/"
       },
       {
-        text:"Android Advanced",
-        link:"Advanced/"
+        text: "Android Advanced",
+        link: "Advanced/"
       }
     ]
   },
   // Java 选项
   {
-    text:"Java",
-    prefix:"/Java/",
-    children:[
+    text: "Java",
+    prefix: "/Java/",
+    children: [
       {
-        text:"Java Basics",
-        link:"Basics/"
+        text: "Java Basics",
+        link: "Basics/"
       },
       {
-        text:"Java GUI",
-        link:"GUI/"
+        text: "Java GUI",
+        link: "GUI/"
       },
       {
-        text:"Java Advanced",
-        link:"Advanced/"
-      }
-    ]
-  },
-  // C++ 选项
-  {
-    text: "C++",
-    prefix: "/C++/",
-    children:[
-      {
-        text: "C++基础入门",
-        link: "C++基础入门/"
+        text: "Java Advanced",
+        link: "Advanced/"
       }
     ]
   },
   // Fontend 选项
   {
-    text:"Fontend",
-    prefix:"/Fontend/",
-    children:[
+    text: "Fontend",
+    prefix: "/Fontend/",
+    children: [
       {
-        text:"HTML",
-        link:"HTML/"
+        text: "HTML",
+        link: "HTML/"
       },
       {
-        text:"CSS",
-        link:"CSS/"
+        text: "CSS",
+        link: "CSS/"
       },
       {
-        text:"JavaScript",
-        link:"JavaScript/"
+        text: "JavaScript",
+        link: "JavaScript/"
       },
       {
-        text:"Vue",
-        link:"Vue/"
+        text: "Vue",
+        link: "Vue/"
       }
     ]
   },
   // Algorithm 选项
   {
-    text:"Algorithm",
-    prefix:"/Algorithm/",
-    children:[
+    text: "Algorithm",
+    prefix: "/Algorithm/",
+    children: [
       {
-        text:"课程笔记",
-        link:"ACM笔记/"
+        text: "课程笔记",
+        link: "ACM笔记/"
       },
     ]
   },
   // Linux 选项
   {
-    text:"Linux",
-    link:"/Linux/"
+    text: "Linux",
+    link: "/Linux/"
   },
-  // Database 选项
+  // GUET 选项
   {
-    text:"Database",
-    link:"/Database/"
+    text: "Guet",
+    prefix: "/GUET/",
+    children:
+      [
+        // C++ 选项
+        {
+          text: "C++",
+          link: "C++/"
+        },
+        // 数据库选项
+        {
+          text: "Database",
+          link: "Database/"
+        },
+        // Java选项
+        {
+          text: "Java",
+          link: "Java/"
+        },
+      ]
   },
   // Others 选项
   {
-    text:"Others",
-    link:"/Others/"
+    text: "Others",
+    link: "/Others/"
   },
 ]);

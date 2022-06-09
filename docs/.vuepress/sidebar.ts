@@ -9,14 +9,15 @@ export default sidebar(
     "/Java/Basics/":"structure",
     "/Java/Advanced/":"structure",
     "/Java/GUI/":"structure",
-    "/C++/C++基础入门/":"structure",
     "/Fontend/CSS/":"structure",
     "/Fontend/HTML/":"structure",
     "/Fontend/JavaScript/":"structure",
     "/Fontend/Vue/":"structure",
     "/Algorithm/ACM笔记/":"structure",
     "/Linux/":"structure",
-    "/Database/":"structure",
+    "/GUET/C++/":"structure",
+    "/GUET/Java/":"structure",
+    "/GUET/Database/":"structure",
     "/Others/":"structure",
   }
 );
