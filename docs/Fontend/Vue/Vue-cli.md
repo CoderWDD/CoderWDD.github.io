@@ -581,7 +581,7 @@ let obj = {
 
     - 父组件
 
-    ![image-20220609161152436](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220609161152436.png)
+      ![image-20220609161152436](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220609161152436.png)
 
     - 子组件
 
@@ -592,6 +592,217 @@ let obj = {
 - 使用v-model时要切记：v-model绑定的值不能是props传过来的值，因为props是不可以修改的！
 
 - props传过来的若是对象类型的值，修改对象中的属性时Vue不会报错，但不推荐这样做。
+
+## 组件的自定义事件
+
+组件自定义事件是一种组件间通信的方式，适用于：**子组件 ===> 父组件**
+
+### 组件自定义事件的使用场景
+
+A是父组件，B是子组件，B想给A传数据，那么就要在A中给B绑定自定义事件（事件的回调在A中）。
+
+### 绑定自定义事件
+
+#### 第一种方式：
+
+第一种方式，在父组件中：`<Demo @atguigu="test"/>`或 `<Demo v-on:atguigu="test"/>`
+
+- 案例：
+
+  - App.vue
+
+    ```vue
+    <template>
+    	<div class="app">
+    		<!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据（第一种写法，使用@或v-on） -->
+    		<Student v-on:atguigu="getStudentName"/> 
+            <!-- <Student @atguigu="getStudentName"/> --> 
+    	</div>
+    </template>
+    
+    <script>
+    	import Student from './components/Student'
+    
+    	export default {
+    		name:'App',
+    		components:{Student},
+    		data() {
+    			return {
+    				msg:'你好啊！',
+    				studentName:''
+    			}
+    		},
+    		methods: {
+    			getStudentName(name,...params){
+    				console.log('App收到了学生名：',name,params)
+    				this.studentName = name
+    			}
+    		}
+    	}
+    </script>
+    
+    <style scoped>
+    	.app{
+    		background-color: gray;
+    		padding: 5px;
+    	}
+    </style>
+    ```
+  
+  
+  - Student.vue
+  
+    ```vue
+    <template>
+    	<div class="student">
+    		<button @click="sendStudentlName">把学生名给App</button>
+    	</div>
+    </template>
+    
+    <script>
+    	export default {
+    		name:'Student',
+    		data() {
+    			return {
+    				name:'张三',
+    			}
+    		},
+    		methods: {
+    			sendStudentlName(){
+    				//触发Student组件实例身上的atguigu事件
+    				this.$emit('atguigu',this.name,666,888,900)
+    			}
+    		},
+    	}
+    </script>
+    
+    <style lang="less" scoped>
+    	.student{
+    		background-color: pink;
+    		padding: 5px;
+    		margin-top: 30px;
+    	}
+    </style>
+    ```
+
+#### 第二种方式：
+
+使用 `this.$refs.xxx.$on()` 这样写起来更灵活，比如可以加定时器啥的。
+
+- 案例
+
+  - App.vue
+
+    ```vue
+    <template>
+    	<div class="app">
+    		<!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据（第二种写法，使用ref） -->
+    		<Student ref="student"/>
+    	</div>
+    </template>
+    
+    <script>
+    	import Student from './components/Student'
+    
+    	export default {
+    		name:'App',
+    		components:{Student},
+    		data() {
+    			return {
+    				studentName:''
+    			}
+    		},
+    		methods: {
+    			getStudentName(name,...params){
+    				console.log('App收到了学生名：',name,params)
+    				this.studentName = name
+    			},
+    		},
+    		mounted() {
+    			this.$refs.student.$on('atguigu',this.getStudentName) //绑定自定义事件
+    			// this.$refs.student.$once('atguigu',this.getStudentName) //绑定自定义事件（一次性）
+    		},
+    	}
+    </script>
+    
+    <style scoped>
+    	.app{
+    		background-color: gray;
+    		padding: 5px;
+    	}
+    </style>
+    ```
+
+  - Student.vue
+
+    ```vue
+    <template>
+    	<div class="student">
+    		<button @click="sendStudentlName">把学生名给App</button>
+    	</div>
+    </template>
+    
+    <script>
+    	export default {
+    		name:'Student',
+    		data() {
+    			return {
+    				name:'张三',
+    			}
+    		},
+    		methods: {
+    			sendStudentlName(){
+    				//触发Student组件实例身上的atguigu事件
+    				this.$emit('atguigu',this.name,666,888,900)
+    			}
+    		},
+    	}
+    </script>
+    
+    <style lang="less" scoped>
+    	.student{
+    		background-color: pink;
+    		padding: 5px;
+    		margin-top: 30px;
+    	}
+    </style>
+    ```
+
+#### 备注
+
+- 若想让自定义事件只能触发一次，可以使用`once`修饰符，或`$once`方法。
+
+- 触发自定义事件：`this.$emit('atguigu',数据)`
+
+- 使用 this.$emit() 就可以子组件向父组件传数据
+
+- 解绑自定义事件`this.$off('atguigu')`，atguigu为事件名称
+
+  ```javascript
+  this.$off('atguigu') //解绑一个自定义事件
+  // this.$off(['atguigu','demo']) //解绑多个自定义事件
+  // this.$off() //解绑所有的自定义事件
+  ```
+
+- 组件上面也可以绑定原生DOM事件，需要使用`native`修饰符
+
+  ```javascript
+  <!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据（第二种写法，使用ref） -->
+  <Student ref="student" @click.native="show"/>
+  ```
+
+  - 通过`this.$refs.xxx.$on('atguigu',回调)`绑定自定义事件的时候，回调**要么配置在methods中，要么使用箭头函数**，否则会导致this的指向出现问题
+  
+- 当组件被销毁的时候，在组件上绑定的自定义事件都会被销毁，但是原生的DOM事件依然可以被调用。同时组件上的事件还能被调用，但是不会有相应式的改变
+
+## 全局事件总线：可以实现任意组件间的通信
+
+### 作为全局事件组件的要求
+
+- 所有的组件都能看见这个东西
+- 可以调用$on, $off, $emit
+
+
 
 
 
