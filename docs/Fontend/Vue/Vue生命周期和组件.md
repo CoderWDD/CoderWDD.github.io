@@ -350,7 +350,7 @@ author : 吴某人的宝贝
 
 ---
 
-### 一个重要的内置关系
+### 一个重要的内置关系(全局事件总线会用到)
 
 - 一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
 
