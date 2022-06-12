@@ -8,89 +8,101 @@ author : 吴某人的宝贝
 
 ## 盒子模型
 
-		网页布局过程：
+- 网页布局过程：
 
-- 先准备好相关的网页元素，网页元素基本都是盒子Box
-- 利用CSS设置好盒子样式，然后摆放到相应位置
-- 往盒子里面装内容
-- 网页的核心本质：利用CSS摆盒子
+  - 先准备好相关的网页元素，网页元素基本都是盒子Box
 
-#### 盒子模型（Box Model）组成
+  - 利用CSS设置好盒子样式，然后摆放到相应位置
 
-		所谓盒子模型：就是把HTML页面中的布局元素看作是一个矩形的盒子，也就是一个盛装内容的容器
-	
-		CSS盒子模型本质上是一个盒子，封装周围的HTML元素，它包括：边框、外边距、内边距和实际内容
+  - 往盒子里面装内容
 
-[![TMoKMj.png](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/TMoKMj.png)](https://imgtu.com/i/TMoKMj)
+  - 网页的核心本质：利用CSS摆盒子
 
-#### 边框
 
-		border可以设置元素的边框。边框有三部分组成：边框宽度、边框样式和边框颜色
-	
-		基本语法格式如下
+### 盒子模型（Box Model）组成
 
-```html
-border : border-width || border-style || border-color
-```
+- 所谓盒子模型：就是把HTML页面中的布局元素看作是一个矩形的盒子，也就是一个盛装内容的容器
+- CSS盒子模型本质上是一个盒子，封装周围的HTML元素，它包括：边框、外边距、内边距和实际内容
 
-- border-width：定义边框粗细，单位是px
-- border-style：边框的样式
-  - solid：实线边框
-  - dashed：虚线边框
-  - dotted：点线边框
+![image-20220612190707326](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220612190707326.png)
 
-- border-color：边框的颜色
+### 边框
 
-> 边框的简写
+- border可以设置元素的边框。边框有三部分组成：边框宽度、边框样式和边框颜色
+
+- 基本语法格式如下
+
+  ```css
+  border : border-width || border-style || border-color
+  ```
+
+  - border-width：定义边框粗细，单位是px
+
+  - border-style：边框的样式
+    - solid：实线边框
+    - dashed：虚线边框
+    - dotted：点线边框
+
+
+  - border-color：边框的颜色
+
+
+#### 边框的简写
 
 ```html
 border : 1px solid red; 	没有顺序
 ```
 
-> 边框分开写法
+#### 边框分开写法
 
 ```html
 border-top : 5px solid pink;
 border-bottom :6px dashed green;
 ```
 
-> 表格的细线边框
+#### 表格的细线边框
 
-		border-collapse属性控制浏览器绘制表格边框的方式。他控制相邻单元格的边框
-	
-		基本语法格式如下
+- border-collapse属性控制浏览器绘制表格边框的方式。他控制相邻单元格的边框
 
-```html
-border-collapse: cpllapse;
-```
+- 基本语法格式如下
 
-- collapse是单词合并的意思
-- border- collapse: collapse;  表示相邻边框合并到一起
+  ```css
+  border-collapse: cpllapse;
+  ```
 
-> 边框会影响盒子的实际大小
+  - collapse是单词合并的意思
 
- 		边框会增加盒子的实际大小。我们有两种解决方案：
+  - border- collapse: collapse;  表示相邻边框合并到一起
 
-- 测量盒子的大小时，不量边框
-- 如果测量的时候包含了边框，则需要 width / height 减去边框宽度
+
+#### 边框会影响盒子的实际大小
+
+- 边框会增加盒子的实际大小。我们有两种解决方案：
+
+  - 测量盒子的大小时，不量边框
+
+  - 如果测量的时候包含了边框，则需要 width / height 减去边框宽度
+
 
 #### 内边距
 
-		padding属性用于设置内边距，即边框与内容之间的距离
+- padding属性用于设置内边距，即边框与内容之间的距离
 
-[![TMbip8.png](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/TMbip8.png)](https://imgtu.com/i/TMbip8)
+![image-20220612190949625](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220612190949625.png)
 
-> padding复合属性
->
-> [![TMbBcD.png](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/TMbBcD.png)](https://imgtu.com/i/TMbBcD)
+#### padding复合属性
 
-		当我们给盒子指定padding值后，发生了两件事情：
+![image-20220612191019899](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220612191019899.png)
 
-- 内容和边框有了距离，增加了内边距
+- 当我们给盒子指定padding值后，发生了两件事情：
 
-- padding影响了盒子的实际大小
+  - 内容和边框有了距离，增加了内边距
 
-  也就是说，如果盒子已经有了宽度和高度，此时再指定内边框会撑大盒子
+
+  - padding影响了盒子的实际大小
+
+    也就是说，如果盒子已经有了宽度和高度，此时再指定内边框会撑大盒子
+
 
 解决方案：用 width/height减去多出来的内边距大小
 
@@ -98,18 +110,19 @@ border-collapse: cpllapse;
 
 #### 外边距
 
-		margin属性用于设置外边距，即控制盒子与盒子之间的距离，属性和padding一样
+- margin属性用于设置外边距，即控制盒子与盒子之间的距离，属性和padding一样
 
-> 外边距的运用
+- 外边距的运用
 
-		外边距可以让块级盒子水平居中，但必须满足两个条件
+  - 外边距可以让块级盒子水平居中，但必须满足两个条件
 
-- 盒子必须指定宽度
-- 盒子的左右外边距都设置为auto
+    - 盒子必须指定宽度
+    - 盒子的左右外边距都设置为auto
 
-```html
-.header { width: 960px; margin: 0 auto;}
-```
+      ```css
+      .header { width: 960px; margin: 0 auto;}
+      ```
+
 
 常见的写法，以下三种都可以：
 
@@ -119,44 +132,47 @@ border-collapse: cpllapse;
 
 注意：以上方法是让块级元素水平居中，行内元素或者行内块元素水平居中给其父元素添加text-align-center即可
 
-> 外边距合并
+#### 外边距合并
 
-		使用margin定义块元素的垂直外边距时，可能会出现外边距的合并。主要有以下两种情况：
+- 使用margin定义块元素的垂直外边距时，可能会出现外边距的合并。主要有以下两种情况：
 
 - 相邻块元素垂直外边距的合并
 
-  		当上下相邻的两个块元素（兄弟关系）相遇时，如果上面的元素有下外边距，下面的元素有上外边距，则他们之间的垂直间距是两个值中的较大者。这种现象被称为相邻块元素垂直外边距的合并
-		
-  		解决方法：只给一个盒子定义外边距
+   - 当上下相邻的两个块元素（兄弟关系）相遇时，如果上面的元素有下外边距，下面的元素有上外边距，则他们之间的垂直间距是两个值中的较大者。这种现象被称为相邻块元素垂直外边距的合并
+
+   - 解决方法：只给一个盒子定义外边距
 
 - 嵌套块元素垂直外边距的塌陷
 
-  		对于两个嵌套关系（父子关系）的块元素，父元素有上外边距的同时子元素也有上外边距，此时父元素会塌陷较大的外边距值
-  	
-  		解决方法
+  - 对于两个嵌套关系（父子关系）的块元素，父元素有上外边距的同时子元素也有上外边距，此时父元素会塌陷较大的外边距值
 
-  - 可以为父元素定义上边框
-  - 可以为父元素定义上内边距
-  - 可以为父元素添加overflow：hidden
+  - 解决方法
 
-> 清除内外边距
+    - 可以为父元素定义上边框
 
-		网页元素很多都带有内外边距，而且不同浏览器默认的也不一致。因此我们在布局前，首先要清楚下网页元素的内外边距
+    - 可以为父元素定义上内边距
 
-```html
+    - 可以为父元素添加overflow：hidden
+
+
+#### 清除内外边距
+
+- 网页元素很多都带有内外边距，而且不同浏览器默认的也不一致。因此我们在布局前，首先要清楚下网页元素的内外边距
+
+```css
 * {
 		padding: 0;			//清除内边距
 		margin: 0;			//清除外边距
 }
 ```
 
-<font color="red">注意：行内元素为了照顾兼容性，尽量只设置左右内外边距，不要设置上下内外边距。但是转换为块级元素和行内块元素就可以了</font>
+注意：行内元素为了照顾兼容性，尽量只设置左右内外边距，不要设置上下内外边距。但是转换为块级元素和行内块元素就可以了
 
 #### 圆角边框
 
-		border-radius属性用于设置元素的外边框圆角，基本语法格式如下：
+- border-radius属性用于设置元素的外边框圆角，基本语法格式如下：
 
-```html
+```css
 border-radius:length
 ```
 
@@ -164,20 +180,20 @@ border-radius:length
 
 ## 浮动
 
-		浮动最典型的应用：可以让多个块级元素一行内排列显示
-	
-		网页布局第一准则：多个块级元素纵向排列找标准流，多个块级元素横向排列找浮动
-	
-		float属性用于创建浮动框，将其移动到另一边，知道左边缘或右边缘触及包含块或另一个浮动框的边缘，基本语法格式如下：
+- 浮动最典型的应用：可以让多个块级元素一行内排列显示
+- 网页布局第一准则：多个块级元素纵向排列找标准流，多个块级元素横向排列找浮动
+- float属性用于创建浮动框，将其移动到另一边，知道左边缘或右边缘触及包含块或另一个浮动框的边缘，基本语法格式如下：	
 
-```
+```css
 选择器 {
-		float: 属性值
+	float: 属性值
 }
 ```
 
 - none（默认）：元素不浮动
+
 - left：元素往左浮动
+
 
 - right：元素往右浮动
 
@@ -249,16 +265,18 @@ border-radius:length
 
 #### 父级添加overflow
 
-		可以给父级添加overfl属性，将其属性值设置为hidden、auto或者scroll，注意是给父元素添加代码
+- 可以给父级添加overfl属性，将其属性值设置为hidden、auto或者scroll，注意是给父元素添加代码
 
-- 优点：代码简介
-- 缺点：无法显示溢出的部分
+  - 优点：代码简介
+
+  - 缺点：无法显示溢出的部分
+
 
 #### ：after伪元素法
 
 ：after方式是额外标签法的升级版，也是给父元素添加
 
-```html
+```css
 .clearfix:after{
 	content: "";
 	display: block;
@@ -279,7 +297,7 @@ border-radius:length
 
 也是给父元素添加
 
- ```html
+ ```css
  .clearfix: before,.clearfix: after {
  	content: "";
  	display: table;
