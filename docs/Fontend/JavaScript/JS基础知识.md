@@ -22,13 +22,13 @@ author : 吴某人的宝贝
 
  #### 内嵌式JS
 
-```html
+```js
 <script>
 		alert('Hello World!');
 </script>
 ```
 
-- 可以将多行JS代码写到<script>标签中
+- 可以将多行JS代码写到`<script>`标签中
 - 内嵌JS是学习时常用的方式
 
 #### 外部JS文件
@@ -43,23 +43,23 @@ author : 吴某人的宝贝
 
 #### JavaScript输入输出语句
 
-		为了方便信息的输入输出，JS 中提供了一些输入输出语句，其常用的语句如下
+	为了方便信息的输入输出，JS 中提供了一些输入输出语句，其常用的语句如下
 
 > alert(msg)：浏览器弹出警示框
 
-```html
+```js
 alert('计算的结果是：');
 ```
 
 > Console.log(msg)：浏览器控制台打印输出信息
 
-```html
+```js
 console.log('我是程序员能看见的');
 ```
 
 > prompt(info)：浏览器弹出输出框，用户可以输入
 
-```html
+```js
 prompt('请输入你的年龄：');
 ```
 
@@ -67,7 +67,7 @@ prompt('请输入你的年龄：');
 
 #### 声明变量
 
-```html
+```js
 //声明变量
 var age; //声明一个名称为age的变量
 ```
@@ -77,7 +77,7 @@ var age; //声明一个名称为age的变量
 
 > 数字型变量的范围
 >
-> ```html
+> ```js
 > alert(Number.MAX_VALUE);
 > alert(Number.MIN_VALUE); 
 > ```
@@ -90,7 +90,7 @@ var age; //声明一个名称为age的变量
 >
 > isNaN()这个方法用来判断非数字，并且返回一个值如果是数字返回false，如果不是数字，则返回true
 >
-> ```html
+> ```js
 > console.log(isNaN(12))
 > 返回结果为：false
 > console.log(isNaN('猪'))
@@ -101,18 +101,18 @@ var age; //声明一个名称为age的变量
 
 #### 数组的创建方式
 
-		JS中创建数组由两种方式
+JS中创建数组由两种方式
 
 - 利用new创建数组
 
-```html
+```js
 var 数组名 = new Array();
 var arr= new Array();  //创建一个新的空数组
 ```
 
 - 利用数组字面量创建数组
 
-```html
+```js
 //1.使用数组字面量方式创建空的数组
 var 数组名 = [];
 //2.使用数组字面量方式创建带初始值的数组
@@ -124,9 +124,11 @@ var 数组名 = ['小黑''小白''大黄''瑞奇']
 
 > 数组元素的类型
 
-		数组中可以存放任意类型的数据，如字符串，数字，布尔值等等，例如下面这种存放的方式也是合法的：
+```js
+数组中可以存放任意类型的数据，如字符串，数字，布尔值等等，例如下面这种存放的方式也是合法的：
+```
 
-```html
+```js
 var arrStus = ['小白',12,true,28.9];
 ```
 
@@ -134,27 +136,27 @@ var arrStus = ['小白',12,true,28.9];
 
 #### 形参与实参个数不匹配的情况
 
-```html
+```js
 function getSum(num1,num2){
-		console.log(num1+nu2);
+	console.log(num1+nu2);
 }
 ```
 
 > 实参的个数等于形参的个数，则输出正常结果
 
-```html
+```js
 getSum(1,2);   //3
 ```
 
 > 实参的个数多余形参的个数，会取到形参的个数
 
-```html
+```js
 getSum(1,2,3); //3
 ```
 
 > 实参的个数小于形参的个数，多的形参定义为undefined，与undefined的计算结果为NaN
 
-```html
+```js
 getSum(1);			// 形参可以看作是不用声明的变量，num2是一个变量但是没有接受值。num2就是undefined
 ```
 
@@ -172,7 +174,7 @@ getSum(1);			// 形参可以看作是不用声明的变量，num2是一个变量
 
 > 命名函数
 
-```html
+```js
 function fn() {
 		
 }
@@ -181,7 +183,7 @@ fn();
 
 > 函数表达式(匿名函数)
 
-```html
+```js
 var fun = function(){
 		console.log('我是函数表达式');
 }
@@ -196,7 +198,7 @@ fun();
 
 > 作用域：就是代码名字（变量）在某个范围内起效果，目的是为了提高程序的可靠性，更重要的是要减少命名冲突
 
-		通常来说，
+- 通常来说，
 
 > JS的作用域(es6)之前
 >
@@ -213,13 +215,13 @@ fun();
 
 ## JavaScript预解析
 
-		JavaScript代码是由浏览器中的JavaScript解析器来执行的。JavaScript解析器在运行JavaScript代码的时候分两步：预解析和代码执行。
+- JavaScript代码是由浏览器中的JavaScript解析器来执行的。JavaScript解析器在运行JavaScript代码的时候分两步：预解析和代码执行。
 
 - 预解析：js 引擎会把 js 里面所有的 var 还有 function 提升到当前作用域的最前面
 
   - 变量提升：就是把所有的变量声明提升到当前作用域的最前面，不提升赋值操作
 
-    ```html
+    ```js
     console.log(num); // undefined
     var num = 10;
     相当于执行了以下代码：
@@ -250,7 +252,7 @@ fun();
 	
 		JavaScript中的对象表达结构更清晰，更强大。张三疯的个人信息在对象中的表达结构如下：
 
-```html
+```js
 张三疯.姓名 = '张三疯';					   person.name = '张三疯';
 张三疯.性别 = '男'；							 	person.sex = '男';
 张三疯.年龄 = 128;								 person.age = 128;
@@ -259,9 +261,9 @@ fun();
 
 #### 利用字面量创建对象
 
-		对象字面量：就是花括号里面包含了这个具体事物的属性和方法
+- 对象字面量：就是花括号里面包含了这个具体事物的属性和方法
 
->```html
+>```js
 >var obj = {
 >		uname: '张三疯',
 >		age: 18,
@@ -291,7 +293,7 @@ fun();
 
 #### 利用new Object创建对象
 
-```html
+```js
 var obj = new Object();
 obj.name = '张三疯';
 obj.age = 18;
@@ -306,13 +308,10 @@ obj.sayHi = function(){
 
 #### 利用构造函数创建对象
 
-		由于我们前面两种创建对象的方式一次只能创建一个对象，所以我们需要使用构造函数来创建对象。
-	
-		构造函数：是一种特殊的函数，主要用来初始化对象，即为对象成员变量赋初始值，他总与 new 运算符一起使用。我们可以把对象中的一些公共的属性和方法抽取出来，然后封装到这个函数里面。
-	
-		构造函数的基本语法如下：
+- 由于我们前面两种创建对象的方式一次只能创建一个对象，所以我们需要使用构造函数来创建对象。
+- 构造函数：是一种特殊的函数，主要用来初始化对象，即为对象成员变量赋初始值，他总与 new 运算符一起使用。我们可以把对象中的一些公共的属性和方法抽取出来，然后封装到这个函数里面。构造函数的基本语法如下：
 
-```html
+```js
 function 构造函数名(){
 		this.属性 = 值;
     this.方法 = function(){};
@@ -320,9 +319,9 @@ function 构造函数名(){
 new 构造函数名();
 ```
 
-		例如：
+- 例如：
 
-```html
+```js
 function Star(uname ,age ,sex){
     this.name = uname;
 		this.age = age;
@@ -349,11 +348,11 @@ var ldh = new Star('刘德华', 18, '男');
 
 #### 遍历对象属性
 
-		for...in 语句用于对数组或者对象的属性进行循环操作
+- for...in 语句用于对数组或者对象的属性进行循环操作
 
 >for in 遍历我们的对象
 >
->```html
+>```js
 >for(var k in obj){
 >		console.log(k);					输出得到属性名
 >		console.log(obj[k]);		输出得到属性值
@@ -411,7 +410,7 @@ var ldh = new Star('刘德华', 18, '男');
 
 > 绝对值方法
 
-```html
+```js
 console.log(Math.abs(1));				// 1
 console.log(Math.abs(-1));			// 1
 console.log(Math.abs('-1'));		// 隐式转换 会把字符串型 -1 转换为数字型
@@ -420,7 +419,7 @@ console.log(Math.abs('猪'))		 // NaN
 
 > 向下取整
 
-```html
+```js
 console.log(Math.floor(1.1));		// 1
 console.log(Math.floor(1.9));		// 1
 ```
@@ -434,7 +433,7 @@ console.log(Math.ceil(1.9));		// 2
 
 > 四舍五入：其他数字四舍五入，但 .5特殊，往上取整，例 -1.5
 
-```html
+```js
 console.log(Math.round(1.1));			// 1
 console.log(Math.round(1.5));			// 2
 console.log(Math.round(1.9));			// 2
@@ -444,7 +443,7 @@ console.log(Math.round(-1.5));		// -1
 
 > 随机数方法
 
-```html
+```js
 1.Math对象随机数方法 randon() 返回一个随机的小数 0<= x < 1
 2.这个方法里面不跟参数
 3.我们想要两个数之间的随机整数，并且包含着两个整数
@@ -457,7 +456,7 @@ console.log(getRandom(1,10));
 
 #### 日期对象
 
-```html
+```js
 // Date() 日期对象，是一个构造函数，必须使用new来调用我们创建的日期对象
 var arr = new Array();      // 创建了一个数组对象
 var obj = new Object();			// 创建了一个对象实例
@@ -471,8 +470,6 @@ var date2 = new Date(2019-10-1 8:8:8);
 ```
 
 #### 日期格式化
-
-![image-20220425191347111](/Users/xiaoyao/Downloads/Library/Application%20Support/typora-user-images/image-20220425191347111.png)
 
 ```javascript
 var date = new Date();
