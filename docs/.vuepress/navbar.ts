@@ -104,6 +104,11 @@ export default navbar([
           text: "ACM Algorithm",
           link: "ACM笔记/"
         },
+        // 数学建模 选项
+        {
+          text: "数学建模",
+          link: "数学建模/"
+        },
       ]
   },
   // Others 选项
