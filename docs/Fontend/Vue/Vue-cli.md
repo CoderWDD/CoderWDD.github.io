@@ -562,253 +562,69 @@ let obj = {
   </style>
   ```
 
+## Vue脚手架配置代理（解决跨域问题）
 
-### 总结TodoList案例
+  ### 产生跨域问题的原因
 
-- 组件化编码流程：
+![image-20220612222243113](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220612222243113.png)
 
-  - 拆分静态组件：组件要按照功能点拆分，命名不要与html元素冲突。
-  - 实现动态组件：考虑好数据的存放位置，数据是一个组件在用，还是一些组件在用：
-    - 一个组件在用：放在组件自身即可。
-    -  一些组件在用：放在他们共同的父组件上（状态提升）。
-    - 实现交互：从绑定事件开始
+### 方法一：
 
-- props适用于
+- 在vue.config.js中添加如下配置
 
-  - 父组件 ==> 子组件 通信
-
-  - 子组件 ==> 父组件 通信（要求父先给子一个函数）
-
-    - 父组件
-
-      ![image-20220609161152436](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220609161152436.png)
-
-    - 子组件
-
-      ![image-20220609161309192](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220609161309192.png)
-
-    - 子组件在给父组件通信时，父组件首先给了子组件一个addTodo的方法，然后在子组件中调用这个方法，就可以实现子组件给父组件通信
-
-- 使用v-model时要切记：v-model绑定的值不能是props传过来的值，因为props是不可以修改的！
-
-- props传过来的若是对象类型的值，修改对象中的属性时Vue不会报错，但不推荐这样做。
-
-## 组件的自定义事件
-
-组件自定义事件是一种组件间通信的方式，适用于：**子组件 ===> 父组件**
-
-### 组件自定义事件的使用场景
-
-A是父组件，B是子组件，B想给A传数据，那么就要在A中给B绑定自定义事件（事件的回调在A中）。
-
-### 绑定自定义事件
-
-#### 第一种方式：
-
-第一种方式，在父组件中：`<Demo @atguigu="test"/>`或 `<Demo v-on:atguigu="test"/>`
-
-- 案例：
-
-  - App.vue
-
-    ```vue
-    <template>
-    	<div class="app">
-    		<!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据（第一种写法，使用@或v-on） -->
-    		<Student v-on:atguigu="getStudentName"/> 
-            <!-- <Student @atguigu="getStudentName"/> --> 
-    	</div>
-    </template>
-    
-    <script>
-    	import Student from './components/Student'
-    
-    	export default {
-    		name:'App',
-    		components:{Student},
-    		data() {
-    			return {
-    				msg:'你好啊！',
-    				studentName:''
-    			}
-    		},
-    		methods: {
-    			getStudentName(name,...params){
-    				console.log('App收到了学生名：',name,params)
-    				this.studentName = name
-    			}
-    		}
-    	}
-    </script>
-    
-    <style scoped>
-    	.app{
-    		background-color: gray;
-    		padding: 5px;
-    	}
-    </style>
-    ```
-  
-  
-  - Student.vue
-  
-    ```vue
-    <template>
-    	<div class="student">
-    		<button @click="sendStudentlName">把学生名给App</button>
-    	</div>
-    </template>
-    
-    <script>
-    	export default {
-    		name:'Student',
-    		data() {
-    			return {
-    				name:'张三',
-    			}
-    		},
-    		methods: {
-    			sendStudentlName(){
-    				//触发Student组件实例身上的atguigu事件
-    				this.$emit('atguigu',this.name,666,888,900)
-    			}
-    		},
-    	}
-    </script>
-    
-    <style lang="less" scoped>
-    	.student{
-    		background-color: pink;
-    		padding: 5px;
-    		margin-top: 30px;
-    	}
-    </style>
-    ```
-
-#### 第二种方式：
-
-使用 `this.$refs.xxx.$on()` 这样写起来更灵活，比如可以加定时器啥的。
-
-- 案例
-
-  - App.vue
-
-    ```vue
-    <template>
-    	<div class="app">
-    		<!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据（第二种写法，使用ref） -->
-    		<Student ref="student"/>
-    	</div>
-    </template>
-    
-    <script>
-    	import Student from './components/Student'
-    
-    	export default {
-    		name:'App',
-    		components:{Student},
-    		data() {
-    			return {
-    				studentName:''
-    			}
-    		},
-    		methods: {
-    			getStudentName(name,...params){
-    				console.log('App收到了学生名：',name,params)
-    				this.studentName = name
-    			},
-    		},
-    		mounted() {
-    			this.$refs.student.$on('atguigu',this.getStudentName) //绑定自定义事件
-    			// this.$refs.student.$once('atguigu',this.getStudentName) //绑定自定义事件（一次性）
-    		},
-    	}
-    </script>
-    
-    <style scoped>
-    	.app{
-    		background-color: gray;
-    		padding: 5px;
-    	}
-    </style>
-    ```
-
-  - Student.vue
-
-    ```vue
-    <template>
-    	<div class="student">
-    		<button @click="sendStudentlName">把学生名给App</button>
-    	</div>
-    </template>
-    
-    <script>
-    	export default {
-    		name:'Student',
-    		data() {
-    			return {
-    				name:'张三',
-    			}
-    		},
-    		methods: {
-    			sendStudentlName(){
-    				//触发Student组件实例身上的atguigu事件
-    				this.$emit('atguigu',this.name,666,888,900)
-    			}
-    		},
-    	}
-    </script>
-    
-    <style lang="less" scoped>
-    	.student{
-    		background-color: pink;
-    		padding: 5px;
-    		margin-top: 30px;
-    	}
-    </style>
-    ```
-
-#### 备注
-
-- 若想让自定义事件只能触发一次，可以使用`once`修饰符，或`$once`方法。
-
-- 触发自定义事件：`this.$emit('atguigu',数据)`
-
-- 使用 this.$emit() 就可以子组件向父组件传数据
-
-- 解绑自定义事件`this.$off('atguigu')`，atguigu为事件名称
-
-  ```javascript
-  this.$off('atguigu') //解绑一个自定义事件
-  // this.$off(['atguigu','demo']) //解绑多个自定义事件
-  // this.$off() //解绑所有的自定义事件
+  ```js
+  devServer:{
+    proxy:"http://localhost:5000"   //为本地服务器的地址	
+  }
   ```
 
-- 组件上面也可以绑定原生DOM事件，需要使用`native`修饰符
+  - 优点：配置简单，请求资源的时候直接发送给前端（8080）即可
+  - 缺点：不能配置多个代理，不能灵活的控制请求的时候是否走代理
+  - 工作方式：若按照上述配置代理，当请求了前端不存在的资源的时候，这个请求会被转发给服务器（优先匹配前端资源）
 
-  ```javascript
-  <!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据（第二种写法，使用ref） -->
-  <Student ref="student" @click.native="show"/>
+### 方法二：
+
+- 编写vue.config.js配置具体代理规则
+
+  ```js
+  module.exports = {
+  	devServer: {
+        proxy: {
+        '/api1': {// 匹配所有以 '/api1'开头的请求路径
+          target: 'http://localhost:5000',// 代理目标的基础路径
+          changeOrigin: true,
+          pathRewrite: {'^/api1': ''}//代理服务器将请求地址转给真实服务器时会将 /api1 去掉
+        },
+        '/api2': {// 匹配所有以 '/api2'开头的请求路径
+          target: 'http://localhost:5001',// 代理目标的基础路径
+          changeOrigin: true,
+          pathRewrite: {'^/api2': ''}
+        }
+      }
+    }
+  }
+  /*
+     changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
+     changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:8080
+     changeOrigin默认值为true
+  */
   ```
 
-  - 通过`this.$refs.xxx.$on('atguigu',回调)`绑定自定义事件的时候，回调**要么配置在methods中，要么使用箭头函数**，否则会导致this的指向出现问题
+  - 使用如上方法配置代理的时候，当后端给的地址并没有我们想要的api的时候，我们可以在封装axios的时候以下代码
+
+  ```js
+  //利用axios对象的方法create，去创建一个axios实例
+  const instance = axios.create({
+      //配置对象
+      //基础路径，发请求的时候，路径中会出现api
+      baseURL: "/api", 
+      //请求超时的时间为5s
+      timeout:5000,
+      withCredentials:true,
+  })
+  ```
+
   
-- 当组件被销毁的时候，在组件上绑定的自定义事件都会被销毁，但是原生的DOM事件依然可以被调用。同时组件上的事件还能被调用，但是不会有相应式的改变
-
-## 全局事件总线：可以实现任意组件间的通信
-
-### 作为全局事件组件的要求
-
-- 所有的组件都能看见这个东西
-- 可以调用$on, $off, $emit
-
-
-
-
-
-
-
-
 
 
 
