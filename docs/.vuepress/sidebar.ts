@@ -19,6 +19,7 @@ export default sidebar(
     "/GUET/Java/":"structure",
     "/GUET/Database/":"structure",
     "/GUET/ACM笔记/":"structure",
+    "/GUET/算法设计与分析/":"structure",
     "/GUET/数学建模/":"structure",
     "/Others/":"structure",
   }
