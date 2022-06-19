@@ -1,6 +1,6 @@
 ---
 category:
-  - Fontend
+  - Frontend
 index : 2
 title :  Vue生命周期和组件
 author : 吴某人的宝贝

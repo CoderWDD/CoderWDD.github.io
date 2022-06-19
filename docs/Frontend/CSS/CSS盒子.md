@@ -1,6 +1,6 @@
 ---
 category:
-  - Fontend
+  - Frontend
 index : 4
 title :  CSS盒子
 author : 吴某人的宝贝

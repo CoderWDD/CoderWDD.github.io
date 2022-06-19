@@ -1,6 +1,6 @@
 ---
 category:
-  - Fontend
+  - Frontend
 index : 1
 title :  JS基础知识
 author : 吴某人的宝贝

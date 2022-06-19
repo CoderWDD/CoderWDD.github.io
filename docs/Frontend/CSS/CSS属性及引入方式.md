@@ -1,6 +1,6 @@
 ---
 category:
-  - Fontend
+  - Frontend
 index : 2
 title :  CSS属性及引入方式
 author : 吴某人的宝贝
