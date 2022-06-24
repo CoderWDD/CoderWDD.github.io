@@ -1,6 +1,6 @@
 ---
 category:
-  - Fontend
+  - Frontend
 index : 2
 title :  你不知道的JavaScript(上)
 author : 吴某人的宝贝
