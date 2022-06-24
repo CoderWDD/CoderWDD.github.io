@@ -1,6 +1,6 @@
 ---
 category:
-  - Fontend
+  - Frontend
 index : 3
 title :  Vue-cli脚手架
 author : 吴某人的宝贝

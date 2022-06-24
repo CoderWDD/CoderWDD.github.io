@@ -45,10 +45,10 @@ export default navbar([
       }
     ]
   },
-  // Fontend 选项
+  // Frontend 选项
   {
-    text: "Fontend",
-    prefix: "/Fontend/",
+    text: "Frontend",
+    prefix: "/Frontend/",
     children: [
       {
         text: "HTML",
