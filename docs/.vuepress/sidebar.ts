@@ -9,18 +9,12 @@ export default sidebar(
     "/Java/Basics/":"structure",
     "/Java/Advanced/":"structure",
     "/Java/GUI/":"structure",
-<<<<<<< HEAD
     "/Fontend/CSS/":"structure",
     "/Fontend/HTML/":"structure",
     "/Fontend/JavaScript/":"structure",
     "/Fontend/Vue/":"structure",
     "/Fontend/MiniProgram/":"structure",
-=======
-    "/Frontend/CSS/":"structure",
-    "/Frontend/HTML/":"structure",
-    "/Frontend/JavaScript/":"structure",
-    "/Frontend/Vue/":"structure",
->>>>>>> 14edd9c9f8774363eaaaff061ff4bd5e83790517
+
     "/Algorithm/":"structure",
     "/Linux/":"structure",
     "/GUET/C++/":"structure",
