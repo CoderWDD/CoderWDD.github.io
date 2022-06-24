@@ -22,7 +22,7 @@ author : 吴某人的宝贝
 
  #### 内嵌式JS
 
-```js
+```javascript
 <script>
 		alert('Hello World!');
 </script>

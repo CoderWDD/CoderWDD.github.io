@@ -65,6 +65,10 @@ export default navbar([
       {
         text: "Vue",
         link: "Vue/"
+      },
+      {
+        text: "MiniProgram",
+        link: "MiniProgram/"
       }
     ]
   },

@@ -13,6 +13,7 @@ export default sidebar(
     "/Fontend/HTML/":"structure",
     "/Fontend/JavaScript/":"structure",
     "/Fontend/Vue/":"structure",
+    "/Fontend/MiniProgram/":"structure",
     "/Algorithm/":"structure",
     "/Linux/":"structure",
     "/GUET/C++/":"structure",
