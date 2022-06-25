@@ -5,16 +5,10 @@ import sidebar from "./sidebar";
 export default hopeTheme({
   hostname: "https://coderwdd.github.io/",
 
-  author: [
-    {
-      name: "瓜瓜",
-      url: "https://github.com/CoderWDD",
-    },
-    {
-      name: "蛙蛙",
-      url: "https://github.com/yunduo23",
-    },
-  ] ,
+  author:     {
+    name: "瓜瓜",
+    url: "https://github.com/CoderWDD",
+  },
 
   iconAssets: "//at.alicdn.com/t/font_2410206_a0xb9hku9iu.css",
 
