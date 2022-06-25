@@ -7,7 +7,7 @@ category :
   - 剑指Offer
 tag : 
   - Medium
-title : 粉刷房子
+title : 剑指OfferⅡ091-粉刷房子
 ---
 
 ## 原题
