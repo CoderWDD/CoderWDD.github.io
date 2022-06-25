@@ -3,7 +3,7 @@ category:
   - Frontend
 index : 2
 title :  你不知道的JavaScript(上)
-author : 吴某人的宝贝
+author : 蛙蛙
 ---
 
 ## JS作用域是什么

@@ -3,7 +3,7 @@ category:
   - Others
 index : 6
 title :  Java考试复习
-author : 吴某人的宝贝
+author : 蛙蛙
 ---
 
 # Java考试复习

@@ -3,7 +3,7 @@ category:
   - Frontend
 index : 4
 title :  CSS盒子
-author : 吴某人的宝贝
+author : 蛙蛙
 ---
 
 ## 盒子模型

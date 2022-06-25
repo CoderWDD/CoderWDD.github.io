@@ -7,6 +7,7 @@ category :
   - 剑指Offer
 tag : 
   - Medium
+author : 瓜瓜和蛙蛙
 title : 剑指OfferⅡ091-粉刷房子
 ---
 
@@ -90,3 +91,38 @@ class Solution {
 }
 ```
 
+### JavaScript 代码
+
+```javascript
+/**
+ * @param {number[][]} costs
+ * @return {number}
+ */
+var minCost = function(costs) {
+    let dp = new Array(3).fill(0);
+    for(let i = 0; i < 3; i++){
+        dp[i] = costs[0][i];
+    }
+    for(let i = 1; i < costs.length; i++){
+        let dp1 = new Array(3).fill(0);
+        for(let j = 0; j < 3; j++){
+            dp1[j] = costs[i][j] + Math.min(dp[(j+1) % 3],dp[(j+2) % 3])
+        }
+        dp = dp1;
+    }
+    return parseInt(Math.min(...dp));
+};
+```
+
+#### 获得数组中的最小值的两种写法
+
+- `Math.min(...dp)`
+- `Math.min.apply(null, dp)`
+
+### 复杂度分析
+
+复杂度分析
+
+- 时间复杂度：$O(n)$，其中 $n$ 是房子个数为 $costs.length$ 。需要遍历全部房子一次，由于颜色数量固定是三种，因此对于每个房子计算粉刷房子的最小花费成本的时间是 $O(1)$，总时间复杂度是 $O(n)$。
+
+- 空间复杂度：$O(1)$。使用空间优化的方法，只需要维护一个长度为 $3$ 的数组，空间复杂度是 $O(1)$。

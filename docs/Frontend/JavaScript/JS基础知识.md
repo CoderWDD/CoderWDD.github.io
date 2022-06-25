@@ -3,7 +3,7 @@ category:
   - Frontend
 index : 1
 title :  JS基础知识
-author : 吴某人的宝贝
+author : 蛙蛙
 ---
 
 ##   JS初体验
