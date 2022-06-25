@@ -4,7 +4,7 @@ layout: Blog
 icon: home
 title: 首页
 heroImage: /logo.svg
-heroText: 吴某人 - 摸鱼致死
+heroText: 瓜娃子 - 摸鱼致死
 tagline: 不可半日不摸鱼！
 heroFullScreen: true
 projects:

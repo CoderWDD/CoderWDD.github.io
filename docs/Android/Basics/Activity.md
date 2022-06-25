@@ -91,4 +91,25 @@ tag:
   - singleTop：在该模式下，每次的 Activity 只要在栈顶，就会复用该实例，然后就会触发 onNewIntent()，如果任务栈不存在该实例，就会创建新实例，但此时就不会调用 onNewIntent() 方法了
   - singleTask：在该模式下，启动的 Activity 只要在任务栈中，就会被复用，并会触发 onNewIntent() ，如果任务栈中不存在该实例，就会创建新的实例，此时就不会调用 onNewIntent()
   -  singleInstance：在该模式下，启动的 Activity 只要任务栈存在该实例，就会被复用，并触发 onNewIntent() 方法
-  - 从上面的描述可以看出，onNewIntent
+  - 从上面的描述可以看出，onNewIntent() 只会在 Activity 被复用的时候被调用，在新创建 Activity 的时候，则不回被调用，实际上，onNewIntent() 的作用就是让开发者在里面对旧的 intent 进行保存，并对新的 intent 进行处理而已，所以也就理解了为什么 onNewIntent() 只会在复用的时候被调用到了。
+- 如果要启动其他应用的 Activity 应该怎么做？
+  - 因为启动的是其他应用的 Activity，所以就该使用 singleInstance 模式，因为该模式中的 Activity 是单独占一个任务栈的，且具有全局唯一性，这样就可以在被调用的应用中也复用该实例了。
+- Fragment 与 Activity 的生命周期的区别：
+  - Activity 有的生命周期 Fragment 都有，且作用相似
+  - Fragment 比 Activity 多了几个方法：
+    - onAttach()：当 Fragment 与 Activity 建立关联时触发
+    - onCreateView()：当 Fragment 创建视图（布局）时触发
+    - onActivityCreated()：当与 Fragment 相关联的 Activity 已经创建完时触发
+    - onDestroyView()：当 Fragment 的视图被移除时触发
+    - onDetach()：当 Fragment 和相关联的 Activity 解除关联时触发
+- 如何实现 Fragment 的滑动？
+  - 基本原理：ViewPager + Fragment
+  - 为 ViewPager 定义一个适配器，这个适配器需要继承 PagerAdapter，传一个 List 数据给该适配器，该 List 数据就是存储 Fragment，想滑动多少个 Fragment 都能方进行，最后实现 ViewPager 的 onPageScrolled()、onPageSelected()、onPageScrollStateChanged() 方法，就能实现 Fragment 滑动了，实际上 App 启动轮播页也可以用该方式实现
+- Fragment 之间传递数据的方式有哪些？
+  - 传统实现：接口回调
+  - 框架：EventBus
+  - 做法：
+    - 可以在 FragmentA 中定义一个接口以及对应的 set 方法，然后在接口里面定义一个方法 dataChange()，参数 data 就是可以进行传递的数据了
+    - 也可以用 EventBus 传值，在 FragmentA 中调用 EventBus.getDefault().post() 传递数据，然后在 FragmentB 中调用 onEvent() 接收与处理传递过来的数据
+- 
+- 

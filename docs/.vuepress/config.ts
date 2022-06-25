@@ -3,7 +3,7 @@ import theme from "./theme";
 
 export default defineUserConfig({
   lang: "zh-CN",
-  title: "吴某人",
+  title: "瓜娃子",
   description: "A blog for daily learning!",
 
   base: "/",

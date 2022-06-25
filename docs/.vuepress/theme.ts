@@ -5,10 +5,16 @@ import sidebar from "./sidebar";
 export default hopeTheme({
   hostname: "https://coderwdd.github.io/",
 
-  author: {
-    name: "吴某人",
-    url: "https://github.com/CoderWDD",
-  },
+  author: [
+    {
+      name: "瓜瓜",
+      url: "https://github.com/CoderWDD",
+    },
+    {
+      name: "蛙蛙",
+      url: "https://github.com/yunduo23",
+    },
+  ] ,
 
   iconAssets: "//at.alicdn.com/t/font_2410206_a0xb9hku9iu.css",
 
@@ -28,14 +34,14 @@ export default hopeTheme({
   // sidebar嵌套的标题深度
   headerDepth: 4,
 
-  footer: "吴某人日寄",
+  footer: "瓜娃子日寄",
 
   displayFooter: true,
 
   pageInfo: ["Author", "Original", "Date", "Category", "Tag", "Word","ReadingTime","PageView"],
 
   blog: {
-    description: "安卓开发程序员",
+    description: "呱呱（安卓）与蛙蛙（前端）的二人博客",
     intro: "/intro.html",
     medias: {
       GitHub: "https://github.com/CoderWDD",
