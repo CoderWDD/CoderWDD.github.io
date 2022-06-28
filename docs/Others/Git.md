@@ -185,7 +185,7 @@ index : 4
 - 删除分支：
 
   ```shell
-  git checkout -d <BranchName>
+  git branch -d <BranchName>
   ```
 
 ### Switch
