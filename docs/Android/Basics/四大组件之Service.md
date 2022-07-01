@@ -6,7 +6,7 @@ category:
   - AndroidBasics
   - Interview
 tag:
-  - Activity
+  - Service
   - 面试
 ---
 

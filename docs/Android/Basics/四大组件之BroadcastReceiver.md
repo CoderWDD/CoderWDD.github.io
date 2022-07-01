@@ -6,7 +6,7 @@ category:
   - AndroidBasics
   - Interview
 tag:
-  - Activity
+  - BroadcastReceiver
   - 面试
 ---
 

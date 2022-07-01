@@ -6,7 +6,7 @@ category:
   - AndroidBasics
   - Interview
 tag:
-  - Activity
+  - ContentProvider
   - 面试
 ---
 
