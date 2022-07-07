@@ -7,7 +7,7 @@ tag :
   - DictionaryTree
   - Tire
   - Medium
-title : Leetcode-1200 最小绝对差
+title : Leetcode-648 单词替换
 ---
 
 ## 题目
