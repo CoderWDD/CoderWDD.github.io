@@ -1,10 +1,10 @@
 ---
 index : 6
 category : 
-  - Greedy
   - Interview
   - Leetcode
 tag : 
+  - Greedy
   - Hard
 title : Leetcode-241 为运算表达式设计优先级
 ---
