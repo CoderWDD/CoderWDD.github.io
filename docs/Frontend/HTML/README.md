@@ -1,3 +1,2 @@
 ## Basics
 
-[test](Activity.md);

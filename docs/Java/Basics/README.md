@@ -8,5 +8,3 @@ title : Java基础
 
 ## Basics
 
-[test](Activity.md);
-
