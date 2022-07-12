@@ -92,12 +92,8 @@ export default hopeTheme({
     },
 
     mdEnhance: {
-<<<<<<< HEAD
       container: true,
       enableAll: true,
-=======
-      enableAll: false,
->>>>>>> 94a5adc97b877b9bd18aa42f7c079e667bc6ba45
       presentation: {
         plugins: ["highlight", "math", "search", "notes", "zoom"],
       },
