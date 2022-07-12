@@ -1,0 +1,1 @@
+import{_ as e}from"./plugin-vue_export-helper.21dcd24c.js";import{o,c as n}from"./app.b529e5a5.js";const t={};function r(c,_){return o(),n("div")}var i=e(t,[["render",r],["__file","Annotion.html.vue"]]);export{i as default};
