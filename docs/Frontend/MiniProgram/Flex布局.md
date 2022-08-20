@@ -3,7 +3,6 @@ category:
   - Frontend
 index : 1
 title :  Flex布局
-author : 蛙蛙
 ---
 
 ## Flex 布局是什么

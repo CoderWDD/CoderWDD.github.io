@@ -3,7 +3,6 @@ category:
   - Others
 index : 6
 title :  Java考试复习
-author : 蛙蛙
 ---
 
 # Java考试复习

@@ -3,7 +3,6 @@ category:
   - Frontend
 index : 1
 title :  CSS语法格式及选择器
-author : 蛙蛙
 ---
 
 ## CSS简介

@@ -3,7 +3,6 @@ category:
   - Frontend
 index : 1
 title :  Html中的JavaScript
-author : 蛙蛙
 ---
 
 ## DOM 和 BOM

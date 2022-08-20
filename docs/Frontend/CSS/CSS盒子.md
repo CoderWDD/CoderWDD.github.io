@@ -3,7 +3,6 @@ category:
   - Frontend
 index : 4
 title :  CSS盒子
-author : 蛙蛙
 ---
 
 ## 盒子模型
