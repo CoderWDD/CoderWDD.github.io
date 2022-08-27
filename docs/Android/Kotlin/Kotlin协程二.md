@@ -57,3 +57,46 @@ category:
 - UNDISPATCHED：协程创建后立即在 **当前函数调用栈** 中执行，直到遇到第一个真正挂起的点
 
 - 注意：**开始调度，只是将当前任务加入待执行的队列，而不是指立即被执行**
+
+## 协程的作用域构建器
+
+- coroutineScope：该作用域内的协程，只要有一个出现异常，其他兄弟协程也会被取消
+- supervisorScope：该作用域内的协程，任何一个协程出现异常，其他兄弟协程不受影响，继续正常运行
+
+## Job对象的生命周期
+
+- 对于每一个通过 `launch` 或 `async` 创建的协程，都会返回一个 `Job` 实例，该实例是协程的唯一标识，并且负责管理协程的生命周期
+
+- 如果协程处于活跃状态，协程运行出错或者调用 `job.cancel()` 都会将当前任务置为 `取消中 (Cancelling)` 状态  `(isActive = false, isCancelled = true)`。当所有的子协程都完成后，协程会进入 `已取消(Cancelled)` 状态，此时isCompleted = true。
+
+  ![image-20220807010642648](https://raw.githubusercontent.com/CoderWDD/myImages/main/blog_images/image-20220807010642648.png)
+
+## 协程的取消
+
+- 取消作用域**会取消它的子协程**
+- 被取消的协程并**不会**影响其余兄弟协程
+- 协程通过抛出一个特殊的异常 CancellationException 来处理取消操作
+- 所有 `kotlinx.coroutines` 中的过去函数 `(withContext、delay...)` 都是可取消的
+
+### CPU 密集型任务取消 - isActive
+
+- 分析：因为 CPU 密集型任务，会不断抢占 CPU 的运行权限，导致普通 `cancel()` 不能取消该协程
+- 解决：可以利用其生命周期，当调用了 `cancel()` 方法后，虽然协程没有被及时取消，但是其生命周期标志 `isActive` 的值会被修改，即从 `true` 变为 `false`，所以可以在协程中加入对 `isActive` 的值的判断，来决定协程内容是否执行 
+
+### CPU 密集型任务取消 - ensureActive()
+
+- 上面的 `isActive` 取消协程时，无法对外做出协程被取消的通知，所以，如果希望在协程被取消时，能收到通知，可以使用 `ensureActive()` 来处理取消协程的工作，从其源码可以看出，其本质也是对 `isActive` 的值进行判断，只不过它会默认在 `isActive` 为 `false` 时抛出异常
+
+### CPU 密集型任务取消 - yield()
+
+- 用于检测所在协程的状态，如果已经取消，则抛出 CancellationException 予以响应，此外，**它还会尝试出让线程的执行权，给其他协程提供执行机会**
+
+## 协程上下文
+
+### 构成
+
+- Job：控制协程的生命周期
+- CoroutineDispatcher：向合适的线程分发任务
+- CoroutineName：协程的名称，调试的时候很有用
+- CoroutineExceptionHandler：处理未被捕捉的异常
+
