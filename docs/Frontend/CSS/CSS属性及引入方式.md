@@ -3,7 +3,6 @@ category:
   - Frontend
 index : 2
 title :  CSS属性及引入方式
-author : 蛙蛙
 ---
 
 ## CSS字体属性

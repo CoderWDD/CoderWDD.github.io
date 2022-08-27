@@ -6,7 +6,7 @@ export default hopeTheme({
   hostname: "https://coderwdd.github.io/",
 
   author:     {
-    name: "瓜瓜",
+    name: "吴某人",
     url: "https://github.com/CoderWDD",
   },
 
@@ -28,14 +28,14 @@ export default hopeTheme({
   // sidebar嵌套的标题深度
   headerDepth: 4,
 
-  footer: "瓜娃子日寄",
+  footer: "吴某人日寄",
 
   displayFooter: true,
 
   pageInfo: ["Author", "Original", "Date", "Category", "Tag", "Word","ReadingTime","PageView"],
 
   blog: {
-    description: "呱呱（安卓）与蛙蛙（前端）的二人博客",
+    description: "吴某人的博客",
     intro: "/intro.html",
     medias: {
       GitHub: "https://github.com/CoderWDD",

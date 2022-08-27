@@ -3,7 +3,6 @@ category:
   - Frontend
 index : 6
 title :  Vue封装的过渡与动画
-author : 吴某人的宝贝
 ---
 
 ## Vue封装的过渡与动画

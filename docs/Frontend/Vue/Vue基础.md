@@ -3,7 +3,6 @@ category:
   - Frontend
 index : 1
 title : Vue基础
-author : 吴某人的宝贝
 ---
 
 ## Vue监视数据的原理

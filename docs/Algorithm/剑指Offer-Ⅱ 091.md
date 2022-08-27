@@ -7,7 +7,6 @@ category :
   - 剑指Offer
 tag : 
   - Medium
-author : 瓜瓜和蛙蛙
 title : 剑指OfferⅡ091-粉刷房子
 ---
 
