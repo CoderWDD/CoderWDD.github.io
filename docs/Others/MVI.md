@@ -3,7 +3,7 @@ index : 5
 title : MVI架构
 category:
   - 架构
-  - others
+  - Others
 ---
 
 ## MVI架构是什么

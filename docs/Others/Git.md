@@ -1,7 +1,7 @@
 ---
 category:
   - git
-  - others
+  - Others
 index : 4
 ---
 
