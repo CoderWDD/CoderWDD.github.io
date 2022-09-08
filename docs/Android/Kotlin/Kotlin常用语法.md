@@ -131,3 +131,44 @@ title : Kotlin常用语法
       fun calcTaxes(): BigDecimal = TODO()
       ```
 
+## @JvmField 生成属性
+
+- 通过 `@JvmField` 注解可以让编译器只生成一个 `public` 的成员属性，而不生成对应的 `setter/getter` 函数
+
+  ```kotlin
+  @JvmField
+  var name: String
+  ```
+
+## 实现静态方法的三种方式
+
+- 顶层函数
+  - 「顶层函数」直接在⽂件中定义函数和属性，会直接⽣成静态的，在 Java 中通过「⽂件名Kt」来 访问，同时可以通过 `@file:JvmName` 注解来修改这个「类名」。
+- `object class`
+- `companion object`
+
+## @JvmStatic
+
+- 通过 `@JvmStatic` 注解，可以将 `object` 和 `companion object` 的内部函数和属性，**真正生成为静态的**
+
+## 判断相等
+
+- `==`：比较 **结构** 是否相等（会调用 `equals()` 进行比较）
+- `===`：比较 **引用**（地址值）是否相等
+
+## 内联函数
+
+- 关键字：`inline`
+- 作用：在编译时，编译器直接将被 `inline` 修饰的内联函数中的函数体 **插入到其调用处**
+- 好处：内联函数配合函数类型，**可以减少函数类型生成的对象**
+
+## 委托
+
+### 属性委托
+
+- 关键字：`lazy`
+- 作用：**值只在第一次访问的时候被计算**
+- 注意：需要委托对象提供相应的 `getValue()`、`setValue()` 方法
+
+
+
